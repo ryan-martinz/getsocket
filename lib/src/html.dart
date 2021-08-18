@@ -13,12 +13,13 @@ enum ConnectionStatus {
 
 class BaseWebSocket {
   String url;
+  String path;
   WebSocket socket;
   SocketNotifier socketNotifier = SocketNotifier();
   Duration ping;
   bool isDisposed = false;
 
-  BaseWebSocket(this.url, {this.ping = const Duration(seconds: 5)}) {
+  BaseWebSocket(this.url, this.path, {this.ping = const Duration(seconds: 5)}) {
     url = url.startsWith('https')
         ? url.replaceAll('https:', 'wss:')
         : url.replaceAll('http:', 'ws:');
@@ -29,7 +30,7 @@ class BaseWebSocket {
   void connect() {
     try {
       connectionStatus = ConnectionStatus.connecting;
-      socket = WebSocket(url);
+      socket = WebSocket(url + path);
       socket.onOpen.listen((e) {
         socketNotifier?.open();
         _t = Timer?.periodic(ping, (t) {
