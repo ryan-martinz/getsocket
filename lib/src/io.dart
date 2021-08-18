@@ -17,7 +17,7 @@ class BaseWebSocket {
   String path;
   WebSocket socket;
   SocketNotifier socketNotifier = SocketNotifier();
-  bool isDisposed = false;
+  bool isDisposed = true;
   BaseWebSocket(this.url, this.path, {this.ping = const Duration(seconds: 5)});
   Duration ping;
   bool allowSelfSigned = true;
@@ -32,7 +32,7 @@ class BaseWebSocket {
       connectionStatus = ConnectionStatus.connecting;
       socket = allowSelfSigned
           ? await _connectForSelfSignedCert(url, path)
-          : await WebSocket.connect(url);
+          : await WebSocket.connect(url + path);
 
       socket.pingInterval = ping;
       socketNotifier?.open();
