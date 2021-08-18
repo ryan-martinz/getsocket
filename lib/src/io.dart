@@ -18,7 +18,7 @@ class BaseWebSocket {
   WebSocket socket;
   SocketNotifier socketNotifier = SocketNotifier();
   bool isDisposed = false;
-  BaseWebSocket(this.url, {this.ping = const Duration(seconds: 5)});
+  BaseWebSocket(this.url, this.path, {this.ping = const Duration(seconds: 5)});
   Duration ping;
   bool allowSelfSigned = true;
 
@@ -31,7 +31,7 @@ class BaseWebSocket {
     try {
       connectionStatus = ConnectionStatus.connecting;
       socket = allowSelfSigned
-          ? await _connectForSelfSignedCert(url)
+          ? await _connectForSelfSignedCert(url, path)
           : await WebSocket.connect(url);
 
       socket.pingInterval = ping;
@@ -102,7 +102,7 @@ class BaseWebSocket {
     send(jsonEncode({'type': event, 'data': data}));
   }
 
-  Future<WebSocket> _connectForSelfSignedCert(url) async {
+  Future<WebSocket> _connectForSelfSignedCert(url, path) async {
     try {
       var r = Random();
       var key = base64.encode(List<int>.generate(8, (_) => r.nextInt(255)));
