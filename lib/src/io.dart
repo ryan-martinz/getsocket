@@ -14,6 +14,7 @@ enum ConnectionStatus {
 
 class BaseWebSocket {
   String url;
+  String path;
   WebSocket socket;
   SocketNotifier socketNotifier = SocketNotifier();
   bool isDisposed = false;
@@ -107,7 +108,7 @@ class BaseWebSocket {
       var key = base64.encode(List<int>.generate(8, (_) => r.nextInt(255)));
       var client = HttpClient();
 
-      var request = await client.getUrl(Uri.parse(url));
+      var request = await client.get(url, 443, path);
       request.headers.add('Connection', 'Upgrade');
       request.headers.add('Upgrade', 'websocket');
       request.headers.add('Sec-WebSocket-Version', '13');
