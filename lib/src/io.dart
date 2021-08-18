@@ -125,6 +125,7 @@ class BaseWebSocket {
 
       return webSocket;
     } catch (e) {
+      print(e);
       rethrow;
     }
   }
