@@ -20,7 +20,7 @@ class BaseWebSocket {
   bool isDisposed = true;
   BaseWebSocket(this.url, this.path, {this.ping = const Duration(seconds: 5)});
   Duration ping;
-  bool allowSelfSigned = true;
+  bool allowSelfSigned = false;
 
   ConnectionStatus connectionStatus;
 
