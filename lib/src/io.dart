@@ -108,7 +108,7 @@ class BaseWebSocket {
       var key = base64.encode(List<int>.generate(8, (_) => r.nextInt(255)));
       var client = HttpClient();
 
-      var request = await client.get(Uri.parse(url + path));
+      var request = await client.getUrl(Uri.parse(url + path));
       request.headers.add('Connection', 'Upgrade');
       request.headers.add('Upgrade', 'websocket');
       request.headers.add('Sec-WebSocket-Version', '13');
